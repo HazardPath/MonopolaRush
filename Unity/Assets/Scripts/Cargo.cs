@@ -26,6 +26,9 @@ public class Cargo : MonoBehaviour{
 	// List of every hold I'm touching.
 	private List<GameObject> holdHitList = new List<GameObject>();
 
+	// List of every crew slot I'm touching.
+	private List<GameObject> crewSlotHitList = new List<GameObject>();
+
 	// List of every non-hold I'm touching.
 	private List<GameObject> hitList = new List<GameObject>();
 
@@ -48,6 +51,8 @@ public class Cargo : MonoBehaviour{
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Hold") {
 			holdHitList.Add (coll.gameObject);
+		} else if (coll.gameObject.tag == "CrewSlot") {
+			crewSlotHitList.Add (coll.gameObject);
 		} else {
 			hitList.Add (coll.gameObject);
 		}
@@ -56,6 +61,8 @@ public class Cargo : MonoBehaviour{
 	void OnTriggerExit2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Hold") {
 			holdHitList.Remove (coll.gameObject);
+		} else if (coll.gameObject.tag == "CrewSlot") {
+			crewSlotHitList.Remove (coll.gameObject);
 		} else {
 			hitList.Remove (coll.gameObject);
 		}
@@ -73,54 +80,62 @@ public class Cargo : MonoBehaviour{
     void OnMouseUp(){
         //Alright, you dropped me here. Now I gotta do a lot of work.
 		if (holdHitList.Count > 0) {
-			Hold hitHold = holdHitList[0].GetComponent<Hold>();
+			Hold hitHold = holdHitList [0].GetComponent<Hold> ();
 			//Snap this to the grid of that hold.
 			//Delta from the corner of the hold, in world units
 			Vector3 difference = transform.position - hitHold.offset;
 			//Multiply by 100 to get pixels, then divide by 32 to get grid units
 			difference = difference * 100.0f / 32.0f;
 			//Add rounding buffer
-			difference += new Vector3(0.16f, 0.16f);
+			difference += new Vector3 (0.16f, 0.16f);
 			//Floor to nearest grid space
-			difference.x = Mathf.Ceil(difference.x);
-			difference.y = Mathf.Ceil(difference.y);
+			difference.x = Mathf.Ceil (difference.x);
+			difference.y = Mathf.Ceil (difference.y);
 			//Check if you're fully inside the hold here, cuz it's easy in these units
-			if(difference.x<0 || difference.x+size.x>hitHold.holdSize || difference.y-size.y<0 || difference.y>hitHold.holdSize){
-				GoHome();
+			if (difference.x < 0 || difference.x + size.x > hitHold.holdSize || difference.y - size.y < 0 || difference.y > hitHold.holdSize) {
+				GoHome ();
 				return;
 			}
 			//Multiply by 32 to get pixels, then divide by 100 to get world units
 			difference = difference * 32.0f / 100.0f;
 			//Add the difference to the offset, and set it as my position, and fudge to clean up
 			transform.position = hitHold.offset + difference;
-			transform.position += new Vector3(-0.16f, -0.16f); //this is largely magic just don't worry about it
+			transform.position += new Vector3 (-0.16f, -0.16f); //this is largely magic just don't worry about it
 			//Now check if you're hitting any other cargo.
 			bool hittingSomething = false;
-			foreach(GameObject obj in hitList){
-				if(obj.GetComponent<BoxCollider2D>().IsTouching(GetComponent<BoxCollider2D>())){
+			foreach (GameObject obj in hitList) {
+				if (obj.GetComponent<BoxCollider2D> ().IsTouching (GetComponent<BoxCollider2D> ())) {
 					hittingSomething = true;
 					break;
 				}
 			}
-			if(hittingSomething){
-				GoHome();
+			if (hittingSomething) {
+				GoHome ();
 				return;
-			}else{
+			} else {
 				//I just rounded to the grid and I'm not hitting anything. I should stop here.
 				//Make this my new home
-				pos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+				pos = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
 				//Remove myself from the old hold
-				if(hold!=null) hold.RemoveCargo(this);
+				if (hold != null)
+					hold.RemoveCargo (this);
 				//Add myself to the new hold
-				hitHold.AddCargo(this);
+				hitHold.AddCargo (this);
 				//Recompile the world
-				PlayerShip.FindObjectOfType<PlayerShip>().Recompile();
+				PlayerShip.FindObjectOfType<PlayerShip> ().Recompile ();
 			}
+		} else if (crewSlotHitList.Count > 0) {
+			CrewHit();
+			return;
 		} else {
 			GoHome();
 			return;
 		}
     }
+
+	public virtual void CrewHit(){
+		GoHome ();
+	}
 
 	void GoHome(){
 		//kludge

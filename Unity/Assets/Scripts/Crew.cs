@@ -7,4 +7,8 @@ public class Crew : Cargo {
 
 	// What this crewmember's job is.
 	public Jobs job;
+
+	public override void CrewHit(){
+
+	}
 }
