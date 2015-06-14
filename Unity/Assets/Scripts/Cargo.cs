@@ -20,4 +20,7 @@ public class Cargo {
 
 	// A list of tags about this specific piece of cargo.
 	public List<Tags> tags;
+
+	// The sprite to draw in the inventory for this.
+	public Sprite sprite;
 }

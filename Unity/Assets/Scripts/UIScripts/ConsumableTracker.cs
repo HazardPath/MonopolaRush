@@ -13,7 +13,7 @@ public class ConsumableTracker : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		myTextBox = GetComponent<Text>();
-		ship = GameObject.FindWithTag("Player Ship").GetComponent<PlayerShip>();
+		ship = GameObject.FindWithTag ("Player Ship").GetComponent<PlayerShip> ();
 		Update ();
 	}
 	

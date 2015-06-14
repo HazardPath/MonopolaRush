@@ -5,16 +5,20 @@ using System.Collections.Generic;
 public class PlayerShip : MonoBehaviour {
 
 	/*
+	 * Constants
+	 */
+
+	// Size of the holds. Holds are assumed to be square.
+	public readonly int MAIN_HOLD_SIZE = 8;
+	public readonly int HIDDEN_HOLD_SIZE = 4;
+
+	/*
 	 * Independent variables
 	 */
 
 	// List of everything in inventory.
 	public List<Cargo> mainHold = new List<Cargo>();
 	public List<Cargo> hiddenHold = new List<Cargo>();
-
-	// Size of the holds. Holds are assumed to be square.
-	public int mainHoldSize = 8;
-	public int hiddenHoldSize = 4;
 
 	// List of crew on ship - if inactive crew is a thing, they'll be in cargo, not in here.
 	public Crew[] crew = new Crew[4];
@@ -48,6 +52,7 @@ public class PlayerShip : MonoBehaviour {
 	 * Internal variables
 	 */
 
+	// What we draw with.
 	private SpriteRenderer spriteRenderer;
 
 	// Use this for initialization
