@@ -123,13 +123,14 @@ public class PlayerShip : MonoBehaviour {
 	}
 
 	public void jump() {
-		if (this.broken) {
+		if (this.tag.Contains("broken")) {
 			//TODO: weird noise in the engine
 		}
 		else {
 			//decrease food by this.mouthsToFeed;
 			if (!consumeSupplies("food", mouthsToFeed)) {
 				int shortfall = mouthsToFeed - inv["food"];
+				Recompile ();
 				crewMorale -= 12.5 * shortfall;
 			}
 			//decrease fuel by this.fuelPerJumps;
