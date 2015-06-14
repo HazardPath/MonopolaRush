@@ -27,7 +27,7 @@ public class Cargo : MonoBehaviour{
 	private List<GameObject> holdHitList = new List<GameObject>();
 
 	// List of every crew slot I'm touching.
-	private List<GameObject> crewSlotHitList = new List<GameObject>();
+	protected List<GameObject> crewSlotHitList = new List<GameObject>();
 
 	// List of every non-hold I'm touching.
 	private List<GameObject> hitList = new List<GameObject>();
@@ -36,7 +36,7 @@ public class Cargo : MonoBehaviour{
 	private Vector2 size;
 
 	// Use this for initialization
-	void Start () {
+	public virtual void Start () {
 		BoxCollider2D collide = GetComponent<BoxCollider2D>();
 		//This is kind of magic numbers.
 		size = collide.offset / 0.16f;
@@ -44,7 +44,7 @@ public class Cargo : MonoBehaviour{
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public virtual void Update () {
 
 	}
 
@@ -115,10 +115,10 @@ public class Cargo : MonoBehaviour{
 			} else {
 				//I just rounded to the grid and I'm not hitting anything. I should stop here.
 				//Make this my new home
-				pos = new Vector3 (transform.position.x, transform.position.y, transform.position.z);
-				//Remove myself from the old hold
-				if (hold != null)
-					hold.RemoveCargo (this);
+				pos = new Vector3 (transform.position.x, transform.position.y, -0.5f);
+				transform.position = pos;
+				//Remove myself from wherever I was before
+				UnattachSelf();
 				//Add myself to the new hold
 				hitHold.AddCargo (this);
 				//Recompile the world
@@ -137,7 +137,12 @@ public class Cargo : MonoBehaviour{
 		GoHome ();
 	}
 
-	void GoHome(){
+	public virtual void UnattachSelf(){
+		if (hold != null)
+			hold.RemoveCargo (this);
+	}
+
+	protected void GoHome(){
 		//kludge
 		pos.z = -2.5f;
 		transform.position = pos;

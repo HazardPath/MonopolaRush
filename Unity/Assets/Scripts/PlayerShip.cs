@@ -31,7 +31,7 @@ public class PlayerShip : MonoBehaviour {
 	public List<Cargo> tempHold = new List<Cargo>();
 
 	// List of crew on ship - if inactive crew is a thing, they'll be in cargo, not in here.
-	public Crew[] crew = new Crew[4];
+	public Crew[] crew = new Crew[6]{null, null, null, null, null, null};
 	
 	// Direction of travel. True = towards motherload, false = towards home.
 	public bool isMovingAway = true;
