@@ -5,5 +5,7 @@ public enum Tags {
 	hungry,
 	outlaw,
 	broken,
-	wantsOff
+	wantsOff,
+	armed,
+	nimble
 }

@@ -11,6 +11,7 @@ public class PlayerShip : MonoBehaviour {
 	// Size of the holds. Holds are assumed to be square.
 	public readonly int MAIN_HOLD_SIZE = 8;
 	public readonly int HIDDEN_HOLD_SIZE = 4;
+	public readonly int TEMP_HOLD_SIZE = 16;
 
 	/*
 	 * Independent variables
@@ -19,24 +20,22 @@ public class PlayerShip : MonoBehaviour {
 	// List of everything in inventory.
 	public List<Cargo> mainHold = new List<Cargo>();
 	public List<Cargo> hiddenHold = new List<Cargo>();
+	public List<Cargo> tempHold = new List<Cargo>();
 
 	// List of crew on ship - if inactive crew is a thing, they'll be in cargo, not in here.
 	public Crew[] crew = new Crew[4];
 	
 	// Current number of jumps away from home
 	public int distance = 0;
-	
-	// Is the ship armed?
-	public bool isArmed = false;
-	
-	// Does the ship have better manuverability than normal?
-	public bool isNimble = false;
-	
+
 	// Amount of fuel used for each jump
 	public int fuelPerJump = 2;
 	
 	// Current morale of the ship. Percentage.
 	public double crewMorale = 100.0;
+	
+	// A list of tags about the ship.
+	public List<Tags> tags;
 
 	/*
 	 * Depndent variables
@@ -102,9 +101,9 @@ public class PlayerShip : MonoBehaviour {
 			foreach(Cargo cur in mainHold) {
 				if (cur.ID == ID)	allSupplies.Add(cur);
 			}
-			allSupplies.Sort ((e1, e2) => e1.quantity > e2.quantity);
+			allSupplies.Sort((e1, e2) => e1.quantity - e2.quantity);
 			int amountRemaining = amount;
-			foreach (List<cargo> hold in new List<List<Cargo>>(mainHold, hiddenHold)) {
+			foreach (List<Cargo> hold in new List<Cargo>[]{mainHold, hiddenHold}) {
 				while (amountRemaining > 0 && allSupplies.Count > 0) {
 					if (allSupplies[0].quantity > amountRemaining) allSupplies[0].quantity -= amountRemaining;
 					else if (allSupplies[0].quantity == amountRemaining) allSupplies.RemoveAt(0);
@@ -121,8 +120,19 @@ public class PlayerShip : MonoBehaviour {
 	}
 
 	public void jump() {
-		//TODO: decrease food by this.mouthsToFeed;
-		//TODO: decrease fuel by this.fuelPerJumps;
+		if (tags.Contains(Tags.broken)) {
+			//TODO: weird noise in the engine
+		}
+		else {
+			//decrease food by this.mouthsToFeed;
+			if (!consumeSupplies("food", mouthsToFeed)) {
+				int shortfall = mouthsToFeed - inv["food"];
+				Recompile ();
+				crewMorale -= 12.5 * shortfall;
+			}
+			//decrease fuel by this.fuelPerJumps;
+			if (consumeSupplies("fuel", fuelPerJump)) distance ++;
+		}
 	}
 
 	void ChangeSprite (Sprite newSprite) {

@@ -23,7 +23,11 @@ public class Cargo : MonoBehaviour{
 	public List<Tags> tags;
 
 	// Who is my daddy?
-	public readonly GameObject parent;
+	public GameObject parent;
+
+	public Cargo() : base(){
+		parent = GetComponent<GameObject> ();
+	}
 
 	// Use this for initialization
 	void Start () {
