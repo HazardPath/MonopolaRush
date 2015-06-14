@@ -123,8 +123,18 @@ public class PlayerShip : MonoBehaviour {
 	}
 
 	public void jump() {
-		//TODO: decrease food by this.mouthsToFeed;
-		//TODO: decrease fuel by this.fuelPerJumps;
+		if (this.broken) {
+			//TODO: weird noise in the engine
+		}
+		else {
+			//decrease food by this.mouthsToFeed;
+			if (!consumeSupplies("food", mouthsToFeed)) {
+				int shortfall = mouthsToFeed - inv["food"];
+				crewMorale -= 12.5 * shortfall;
+			}
+			//decrease fuel by this.fuelPerJumps;
+			if (consumeSupplies("fuel", fuelPerJump)) distance ++;
+		}
 	}
 
 	void ChangeSprite (Sprite newSprite) {
