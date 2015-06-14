@@ -27,7 +27,8 @@ public class MainInventory : MonoBehaviour {
 		// Draw all of the grid squares
 		for(int i=0; i<ship.MAIN_HOLD_SIZE; i++){
 			for(int j=0; j<ship.MAIN_HOLD_SIZE; j++){
-				grid.Add(Instantiate(emptySquare, offset+(2*new Vector3(i,j,0)/7), Quaternion.identity));
+				//Why 32/100? The default pixels per unit is 100, and each square is 32 pixels.
+				grid.Add(Instantiate(emptySquare, offset+(32*new Vector3(i,j,0)/100), Quaternion.identity));
 			}
 		}
 
