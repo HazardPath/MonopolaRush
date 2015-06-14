@@ -26,7 +26,7 @@ public class PlayerShip : MonoBehaviour {
 	public Crew[] crew = new Crew[4];
 	
 	// Current number of jumps away from home
-	public int distance = 0;
+	public float distance = -2.38f;
 
 	// Amount of fuel used for each jump
 	public int fuelPerJump = 2;
@@ -138,10 +138,10 @@ public class PlayerShip : MonoBehaviour {
 		}
 		if (!tags.Contains(Tags.broken)) {
 			//decrease fuel by this.fuelPerJumps;
-			if (consumeSupplies("fuel", fuelPerJump)) distance ++;
+			if (consumeSupplies("fuel", fuelPerJump)) distance += .206;
 			else if (!tags.Contains(Tags.outoffuel)) tags.Add(Tags.outoffuel);
 		}
-		//TODO: call event generator
+		//call event generator
 		EventList.eventGenerator (this);
 	}
 
