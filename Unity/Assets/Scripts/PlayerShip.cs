@@ -27,13 +27,7 @@ public class PlayerShip : MonoBehaviour {
 	
 	// Current number of jumps away from home
 	public int distance = 0;
-	
-	// Is the ship armed?
-	public bool isArmed = false;
-	
-	// Does the ship have better manuverability than normal?
-	public bool isNimble = false;
-	
+
 	// Amount of fuel used for each jump
 	public int fuelPerJump = 2;
 	
