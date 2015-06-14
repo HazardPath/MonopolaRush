@@ -9,3 +9,10 @@ public enum Tags {
 	armed,
 	nimble
 }
+
+public enum Jobs {
+	grunt,	//"Security"
+	meche,	//"Engineer"
+	medic,
+	rogue	//"Grifter"
+}

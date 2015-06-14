@@ -47,6 +47,15 @@ public class PlayerShip : MonoBehaviour {
 	// How many people are on board (active crew or otherwise)
 	public int mouthsToFeed = 0;
 
+	public int numActive(Jobs job) {
+		int result = 0;
+		foreach (Crew cur in crew) {
+			if (cur.job == job)
+				result ++;
+		}
+		return result;
+	}
+
 	/*
 	 * Internal variables
 	 */
@@ -97,13 +106,13 @@ public class PlayerShip : MonoBehaviour {
 			return false;
 		else {
 			// Making a list of every stack of Cargo<ID>
-			List<Cargo> allSupplies = new List<Cargo>();
-			foreach(Cargo cur in mainHold) {
-				if (cur.ID == ID)	allSupplies.Add(cur);
-			}
-			allSupplies.Sort((e1, e2) => e1.quantity - e2.quantity);
 			int amountRemaining = amount;
 			foreach (List<Cargo> hold in new List<Cargo>[]{mainHold, hiddenHold}) {
+				List<Cargo> allSupplies = new List<Cargo>();
+				foreach(Cargo cur in hold) {
+					if (cur.ID == ID)	allSupplies.Add(cur);
+				}
+				allSupplies.Sort((e1, e2) => e1.quantity - e2.quantity);
 				while (amountRemaining > 0 && allSupplies.Count > 0) {
 					if (allSupplies[0].quantity > amountRemaining) allSupplies[0].quantity -= amountRemaining;
 					else if (allSupplies[0].quantity == amountRemaining) allSupplies.RemoveAt(0);
