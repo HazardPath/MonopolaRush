@@ -53,7 +53,7 @@ public class PlayerShip : MonoBehaviour {
 	 */
 
 	// Compiled list of inventory - the above inventory compiled into human readable things. The key is <Cargo>.ID
-	public Dictionary<string, int> inv = new Dictionary<string, int>();
+	public Dictionary<Cargotypes, int> inv = new Dictionary<Cargotypes, int>();
 
 	// How many people are on board (active crew or otherwise)
 	public int mouthsToFeed = 0;
@@ -111,7 +111,7 @@ public class PlayerShip : MonoBehaviour {
 	}
 
 	// Checks if $amount of $string are onboard. If so, decreases available stores by $amount and returns true. If not, returns false.
-	public bool consumeSupplies(string ID, int amount) {
+	public bool consumeSupplies(Cargotypes ID, int amount) {
 		//Check cache tosee if ship has enough
 		if (inv [ID] < amount)
 			return false;
@@ -141,15 +141,15 @@ public class PlayerShip : MonoBehaviour {
 
 	public void jump() {
 		//decrease food by this.mouthsToFeed;
-		if (!consumeSupplies("food", mouthsToFeed)) {
-			int shortfall = mouthsToFeed - inv["food"];
+		if (!consumeSupplies(Cargotypes.food, mouthsToFeed)) {
+			int shortfall = mouthsToFeed - inv[Cargotypes.food];
 			Recompile ();
 			crewMorale -= 12.5 * shortfall;
 			if (!tags.Contains(Tags.outoffood)) tags.Add(Tags.outoffood);
 		}
 		if (!tags.Contains(Tags.broken)) {
 			//decrease fuel by this.fuelPerJumps;
-			if (consumeSupplies("fuel", fuelPerJump)) {
+			if (consumeSupplies(Cargotypes.fuel, fuelPerJump)) {
 				if (isMovingAway) distance += UNITS_PER_JUMP;
 				else distance -= UNITS_PER_JUMP;
 			}

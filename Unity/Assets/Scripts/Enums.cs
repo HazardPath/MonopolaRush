@@ -18,3 +18,14 @@ public enum Jobs {
 	medic,
 	rogue	//"Grifter"
 }
+
+public enum Cargotypes {
+	crew,
+	food,
+	fuel,
+	medicine,
+	mono,
+	parts,
+	trades,
+	unknown
+}

@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefix: 'Fuel: '
-  whatITrack: fuel
+  whatITrack: 2
 --- !u!114 &15275152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,6 +446,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  isMovingAway: 1
   distance: 0
   fuelPerJump: 0
   crewMorale: 0
@@ -536,7 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefix: 'Food: '
-  whatITrack: food
+  whatITrack: 1
 --- !u!114 &891537197
 MonoBehaviour:
   m_ObjectHideFlags: 0

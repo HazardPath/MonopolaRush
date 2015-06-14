@@ -6,7 +6,7 @@ using System.Collections.Generic;
 // This attaches itself to prefabs. The prefabs that get created, therefore, create cargo that goes with them.
 public class Cargo : MonoBehaviour{
 	// Unique identifier for this type of cargo. Cargo with the same ID will be lumped together in the compiled view.
-	public string ID;
+	public Cargotypes ID;
 
 	// Position of the piece of cargo in the WORLD. Can be initially set manually, or by the Hold.PlaceCargo() function.
 	public Vector3 pos = Vector3.zero;

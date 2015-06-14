@@ -5,7 +5,7 @@ using System.Collections;
 public class ConsumableTracker : MonoBehaviour {
 
 	public string prefix;
-	public string whatITrack;
+	public Cargotypes whatITrack;
 
 	private Text myTextBox;
 	private PlayerShip ship;
