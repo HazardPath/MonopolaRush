@@ -9,9 +9,17 @@ public class PlayerShip : MonoBehaviour {
 	 */
 
 	// Size of the holds. Holds are assumed to be square.
-	public readonly int MAIN_HOLD_SIZE = 8;
-	public readonly int HIDDEN_HOLD_SIZE = 4;
-	public readonly int TEMP_HOLD_SIZE = 16;
+	public static readonly int MAIN_HOLD_SIZE = 8;
+	public static readonly int HIDDEN_HOLD_SIZE = 4;
+	public static readonly int TEMP_HOLD_SIZE = 16;
+
+	// Conversion of in-game locations and distances to UI locations and distances.
+	// Distance traveled (across the UI) every jump, in units.
+	public static readonly float UNITS_PER_JUMP = .206f;
+	// Location of home in UI space.
+	public static readonly float HOME_IN_UNITS = -2.38f;
+	// Location of mining spot in UI space.
+	public static readonly float MOTHERLOAD_IN_UNITS = 3.81f;
 
 	/*
 	 * Independent variables
@@ -25,8 +33,11 @@ public class PlayerShip : MonoBehaviour {
 	// List of crew on ship - if inactive crew is a thing, they'll be in cargo, not in here.
 	public Crew[] crew = new Crew[4];
 	
-	// Current number of jumps away from home
-	public int distance = 0;
+	// Direction of travel. True = towards motherload, false = towards home.
+	public bool isMovingAway = true;
+
+	// Current distance from home as marked on the screen.
+	public float distance = HOME_IN_UNITS;
 
 	// Amount of fuel used for each jump
 	public int fuelPerJump = 2;
@@ -42,7 +53,7 @@ public class PlayerShip : MonoBehaviour {
 	 */
 
 	// Compiled list of inventory - the above inventory compiled into human readable things. The key is <Cargo>.ID
-	public Dictionary<string, int> inv = new Dictionary<string, int>();
+	public Dictionary<Cargotypes, int> inv = new Dictionary<Cargotypes, int>();
 
 	// How many people are on board (active crew or otherwise)
 	public int mouthsToFeed = 0;
@@ -100,7 +111,7 @@ public class PlayerShip : MonoBehaviour {
 	}
 
 	// Checks if $amount of $string are onboard. If so, decreases available stores by $amount and returns true. If not, returns false.
-	public bool consumeSupplies(string ID, int amount) {
+	public bool consumeSupplies(Cargotypes ID, int amount) {
 		//Check cache tosee if ship has enough
 		if (inv [ID] < amount)
 			return false;
@@ -130,18 +141,22 @@ public class PlayerShip : MonoBehaviour {
 
 	public void jump() {
 		//decrease food by this.mouthsToFeed;
-		if (!consumeSupplies("food", mouthsToFeed)) {
-			int shortfall = mouthsToFeed - inv["food"];
+		if (!consumeSupplies(Cargotypes.food, mouthsToFeed)) {
+			int shortfall = mouthsToFeed - inv[Cargotypes.food];
 			Recompile ();
 			crewMorale -= 12.5 * shortfall;
 			if (!tags.Contains(Tags.outoffood)) tags.Add(Tags.outoffood);
 		}
 		if (!tags.Contains(Tags.broken)) {
 			//decrease fuel by this.fuelPerJumps;
-			if (consumeSupplies("fuel", fuelPerJump)) distance ++;
+			if (consumeSupplies(Cargotypes.fuel, fuelPerJump)) {
+				if (isMovingAway) distance += UNITS_PER_JUMP;
+				else distance -= UNITS_PER_JUMP;
+			}
 			else if (!tags.Contains(Tags.outoffuel)) tags.Add(Tags.outoffuel);
 		}
-		//TODO: call event generator
+		//call event generator
+		EventList.eventGenerator (this);
 	}
 
 	void ChangeSprite (Sprite newSprite) {

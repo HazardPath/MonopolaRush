@@ -35,15 +35,15 @@ public class Hold : MonoBehaviour {
 
 		switch (holdType) {
 		case HoldType.mainHold:
-			holdSize = ship.MAIN_HOLD_SIZE;
+			holdSize = PlayerShip.MAIN_HOLD_SIZE;
 			hold = ship.mainHold;
 			break;
 		case HoldType.hiddenHold:
-			holdSize = ship.HIDDEN_HOLD_SIZE;
+			holdSize = PlayerShip.HIDDEN_HOLD_SIZE;
 			hold = ship.hiddenHold;
 			break;
 		case HoldType.temporaryHold:
-			holdSize = ship.TEMP_HOLD_SIZE;
+			holdSize = PlayerShip.TEMP_HOLD_SIZE;
 			hold = ship.tempHold;
 			break;
 		}
