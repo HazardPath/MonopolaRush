@@ -85,7 +85,7 @@ public class Cargo : MonoBehaviour{
 			difference.x = Mathf.Ceil(difference.x);
 			difference.y = Mathf.Ceil(difference.y);
 			//Check if you're fully inside the hold here, cuz it's easy in these units
-			if(difference.x<0 || difference.x+size.x>=hitHold.holdSize || difference.y-size.y<0 || difference.y>=hitHold.holdSize){
+			if(difference.x<0 || difference.x+size.x>hitHold.holdSize || difference.y-size.y<0 || difference.y>hitHold.holdSize){
 				GoHome();
 				return;
 			}
