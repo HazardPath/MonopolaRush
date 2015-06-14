@@ -6,5 +6,5 @@ public class Crew : Cargo {
 	//TODO public static readonly Dictionary<string, Sprite> 
 
 	// What this crewmember's job is.
-	public string job;
+	public Jobs job;
 }

@@ -47,6 +47,15 @@ public class PlayerShip : MonoBehaviour {
 	// How many people are on board (active crew or otherwise)
 	public int mouthsToFeed = 0;
 
+	public int numActive(Jobs job) {
+		int result = 0;
+		foreach (Crew cur in crew) {
+			if (cur.job == job)
+				result ++;
+		}
+		return result;
+	}
+
 	/*
 	 * Internal variables
 	 */
