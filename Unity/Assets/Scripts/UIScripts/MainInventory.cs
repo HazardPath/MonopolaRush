@@ -37,6 +37,8 @@ public class MainInventory : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		foreach (Cargo cur in ship.mainHold) {
 
+		}
 	}
 }
