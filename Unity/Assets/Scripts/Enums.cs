@@ -7,7 +7,9 @@ public enum Tags {
 	broken,
 	wantsOff,
 	armed,
-	nimble
+	nimble,
+	outoffuel,
+	outoffood
 }
 
 public enum Jobs {

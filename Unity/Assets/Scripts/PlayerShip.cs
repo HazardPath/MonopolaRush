@@ -129,19 +129,19 @@ public class PlayerShip : MonoBehaviour {
 	}
 
 	public void jump() {
-		if (tags.Contains(Tags.broken)) {
-			//TODO: odd_engine_noise
+		//decrease food by this.mouthsToFeed;
+		if (!consumeSupplies("food", mouthsToFeed)) {
+			int shortfall = mouthsToFeed - inv["food"];
+			Recompile ();
+			crewMorale -= 12.5 * shortfall;
+			if (!tags.Contains(Tags.outoffood)) tags.Add(Tags.outoffood);
 		}
-		else {
-			//decrease food by this.mouthsToFeed;
-			if (!consumeSupplies("food", mouthsToFeed)) {
-				int shortfall = mouthsToFeed - inv["food"];
-				Recompile ();
-				crewMorale -= 12.5 * shortfall;
-			}
+		if (!tags.Contains(Tags.broken)) {
 			//decrease fuel by this.fuelPerJumps;
 			if (consumeSupplies("fuel", fuelPerJump)) distance ++;
+			else if (!tags.Contains(Tags.outoffuel)) tags.Add(Tags.outoffuel);
 		}
+		//TODO: call event generator
 	}
 
 	void ChangeSprite (Sprite newSprite) {
