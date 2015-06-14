@@ -9,17 +9,17 @@ public class PlayerShip : MonoBehaviour {
 	 */
 
 	// Size of the holds. Holds are assumed to be square.
-	public readonly int MAIN_HOLD_SIZE = 8;
-	public readonly int HIDDEN_HOLD_SIZE = 4;
-	public readonly int TEMP_HOLD_SIZE = 16;
+	public static readonly int MAIN_HOLD_SIZE = 8;
+	public static readonly int HIDDEN_HOLD_SIZE = 4;
+	public static readonly int TEMP_HOLD_SIZE = 16;
 
 	// Conversion of in-game locations and distances to UI locations and distances.
 	// Distance traveled (across the UI) every jump, in units.
-	public readonly float UNITS_PER_JUMP = .206f;
+	public static readonly float UNITS_PER_JUMP = .206f;
 	// Location of home in UI space.
-	public readonly float HOME_IN_UNITS = -2.38f;
+	public static readonly float HOME_IN_UNITS = -2.38f;
 	// Location of mining spot in UI space.
-	public readonly float MOTHERLOAD_IN_UNITS = 3.81f;
+	public static readonly float MOTHERLOAD_IN_UNITS = 3.81f;
 
 	/*
 	 * Independent variables
