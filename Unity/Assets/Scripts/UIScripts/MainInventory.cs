@@ -16,6 +16,8 @@ public class MainInventory : MonoBehaviour {
 	// A list of all our squares, just to keep track of them.
 	private List<Object> grid = new List<Object>();
 
+	public Vector3 offset;
+
 	// Use this for initialization
 	void Start () {
 		ship = GameObject.FindWithTag ("Player Ship").GetComponent<PlayerShip> ();

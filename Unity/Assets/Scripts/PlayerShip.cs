@@ -39,6 +39,9 @@ public class PlayerShip : MonoBehaviour {
 	
 	// Current morale of the ship. Percentage.
 	public double crewMorale = 100.0;
+	
+	// A list of tags about the ship.
+	public List<Tags> tags;
 
 	/*
 	 * Depndent variables
@@ -104,9 +107,9 @@ public class PlayerShip : MonoBehaviour {
 			foreach(Cargo cur in mainHold) {
 				if (cur.ID == ID)	allSupplies.Add(cur);
 			}
-			allSupplies.Sort ((e1, e2) => e1.quantity > e2.quantity);
+			allSupplies.Sort((e1, e2) => e1.quantity - e2.quantity);
 			int amountRemaining = amount;
-			foreach (List<cargo> hold in new List<List<Cargo>>(mainHold, hiddenHold)) {
+			foreach (List<Cargo> hold in new List<Cargo>[]{mainHold, hiddenHold}) {
 				while (amountRemaining > 0 && allSupplies.Count > 0) {
 					if (allSupplies[0].quantity > amountRemaining) allSupplies[0].quantity -= amountRemaining;
 					else if (allSupplies[0].quantity == amountRemaining) allSupplies.RemoveAt(0);
@@ -123,7 +126,7 @@ public class PlayerShip : MonoBehaviour {
 	}
 
 	public void jump() {
-		if (this.broken) {
+		if (tags.Contains(Tags.broken)) {
 			//TODO: weird noise in the engine
 		}
 		else {
