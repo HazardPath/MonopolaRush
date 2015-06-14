@@ -130,7 +130,7 @@ public class PlayerShip : MonoBehaviour {
 
 	public void jump() {
 		if (tags.Contains(Tags.broken)) {
-			//TODO: weird noise in the engine
+			//TODO: odd_engine_noise
 		}
 		else {
 			//decrease food by this.mouthsToFeed;
