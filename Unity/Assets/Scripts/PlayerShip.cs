@@ -13,6 +13,14 @@ public class PlayerShip : MonoBehaviour {
 	public readonly int HIDDEN_HOLD_SIZE = 4;
 	public readonly int TEMP_HOLD_SIZE = 16;
 
+	// Conversion of in-game locations and distances to UI locations and distances.
+	// Distance traveled (across the UI) every jump, in units.
+	public readonly float UNITS_PER_JUMP = .206f;
+	// Location of home in UI space.
+	public readonly float HOME_IN_UNITS = -2.38f;
+	// Location of mining spot in UI space.
+	public readonly float MOTHERLOAD_IN_UNITS = 3.81f;
+
 	/*
 	 * Independent variables
 	 */
@@ -25,8 +33,11 @@ public class PlayerShip : MonoBehaviour {
 	// List of crew on ship - if inactive crew is a thing, they'll be in cargo, not in here.
 	public Crew[] crew = new Crew[4];
 	
-	// Current number of jumps away from home
-	public float distance = -2.38f;
+	// Direction of travel. True = towards motherload, false = towards home.
+	public bool isMovingAway = true;
+
+	// Current distance from home as marked on the screen.
+	public float distance = HOME_IN_UNITS;
 
 	// Amount of fuel used for each jump
 	public int fuelPerJump = 2;
@@ -138,7 +149,10 @@ public class PlayerShip : MonoBehaviour {
 		}
 		if (!tags.Contains(Tags.broken)) {
 			//decrease fuel by this.fuelPerJumps;
-			if (consumeSupplies("fuel", fuelPerJump)) distance += .206;
+			if (consumeSupplies("fuel", fuelPerJump)) {
+				if (isMovingAway) distance += UNITS_PER_JUMP;
+				else distance -= UNITS_PER_JUMP;
+			}
 			else if (!tags.Contains(Tags.outoffuel)) tags.Add(Tags.outoffuel);
 		}
 		//call event generator
