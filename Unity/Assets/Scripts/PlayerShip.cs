@@ -11,6 +11,7 @@ public class PlayerShip : MonoBehaviour {
 	// Size of the holds. Holds are assumed to be square.
 	public readonly int MAIN_HOLD_SIZE = 8;
 	public readonly int HIDDEN_HOLD_SIZE = 4;
+	public readonly int TEMP_HOLD_SIZE = 16;
 
 	/*
 	 * Independent variables
@@ -19,6 +20,7 @@ public class PlayerShip : MonoBehaviour {
 	// List of everything in inventory.
 	public List<Cargo> mainHold = new List<Cargo>();
 	public List<Cargo> hiddenHold = new List<Cargo>();
+	public List<Cargo> tempHold = new List<Cargo>();
 
 	// List of crew on ship - if inactive crew is a thing, they'll be in cargo, not in here.
 	public Crew[] crew = new Crew[4];
