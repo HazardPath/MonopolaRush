@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Player Ship
+  - Hold
+  - Console
   layers:
   - Default
   - TransparentFX

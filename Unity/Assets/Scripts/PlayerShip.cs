@@ -17,7 +17,7 @@ public class PlayerShip : MonoBehaviour {
 	 * Independent variables
 	 */
 
-	// List of everything in inventory.
+	// List of everything in inventory. These are referenced elsewhere in code; do NOT assign new ones.
 	public List<Cargo> mainHold = new List<Cargo>();
 	public List<Cargo> hiddenHold = new List<Cargo>();
 	public List<Cargo> tempHold = new List<Cargo>();
@@ -76,7 +76,7 @@ public class PlayerShip : MonoBehaviour {
 	// Updates all GUI elements and dependent variables (like `inv`) based on independent variables (like the cargo lists).
 	// Guaranteed to have no side effects, and can be called frequently without breaking the game. Calling Recompile() if
 	// no changes have been made since the last recompile should make no changes to the world.
-	void Recompile () {
+	public void Recompile () {
 		// Update the inv dictionary & mouthsToFeed
 		inv.Clear ();
 		mouthsToFeed = 0;
