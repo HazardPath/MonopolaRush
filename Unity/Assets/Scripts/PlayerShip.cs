@@ -142,6 +142,7 @@ public class PlayerShip : MonoBehaviour {
 			else if (!tags.Contains(Tags.outoffuel)) tags.Add(Tags.outoffuel);
 		}
 		//TODO: call event generator
+		EventList.eventGenerator (this);
 	}
 
 	void ChangeSprite (Sprite newSprite) {
