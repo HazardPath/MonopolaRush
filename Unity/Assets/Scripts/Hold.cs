@@ -20,7 +20,7 @@ public class Hold : MonoBehaviour {
 
 	public HoldType holdType;
 
-	private int holdSize;
+	public int holdSize;
 
 	private List<Cargo> hold;
 
@@ -70,14 +70,30 @@ public class Hold : MonoBehaviour {
 
 	}
 
-	public void AddCargo(Cargo toadd){
-		hold.Add (toadd);
-		toadd.hold = this;
+	// Adds that cargo to this hold. Does not move the cargo, just adds ownership.
+	public void AddCargo(Cargo c){
+		hold.Add (c);
+		c.hold = this;
 	}
 
+	// Removes that cargo from this hold. Does not delete the cargo, just remove ownership.
 	public void RemoveCargo(Cargo toremove){
 		hold.Remove (toremove);
 		toremove.hold = null;
+	}
+	
+	// Given an x,y in grid coordinates, returns the position vector in world coordinates to place the cargo.
+	// Then there's a bunch of helper methods below.
+	public Vector3 PlaceCargo(int x, int y){
+		return offset + new Vector3 (x*.32f, y*.32f, 0);
+	}
+	
+	public Vector3 PlaceCargo(Vector3 gridPos){
+		return PlaceCargo ((int)Mathf.Floor(gridPos.x), (int)Mathf.Floor(gridPos.y));
+	}
+	
+	public Vector3 PlaceCargo(Vector2 gridPos){
+		return PlaceCargo ((int)Mathf.Floor(gridPos.x), (int)Mathf.Floor(gridPos.y));
 	}
 }
 

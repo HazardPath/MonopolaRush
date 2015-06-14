@@ -8,8 +8,8 @@ public class Cargo : MonoBehaviour{
 	// Unique identifier for this type of cargo. Cargo with the same ID will be lumped together in the compiled view.
 	public string ID;
 
-	// Position of the piece of cargo in the WORLD.
-	public Vector3 pos;
+	// Position of the piece of cargo in the WORLD. Can be initially set manually, or by the Hold.PlaceCargo() function.
+	public Vector3 pos = Vector3.zero;
 
 	// Numbers of items in the current stack
 	public int quantity;
@@ -29,9 +29,15 @@ public class Cargo : MonoBehaviour{
 	// List of every non-hold I'm touching.
 	private List<GameObject> hitList = new List<GameObject>();
 
+	// How big am I in grid units? This is determined by the offset of the hitbox.
+	private Vector2 size;
+
 	// Use this for initialization
 	void Start () {
-		Log ("ok");
+		BoxCollider2D collide = GetComponent<BoxCollider2D>();
+		//This is kind of magic numbers.
+		size = collide.offset / 0.16f;
+		size.y *= -1;
 	}
 	
 	// Update is called once per frame
@@ -42,7 +48,6 @@ public class Cargo : MonoBehaviour{
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Hold") {
 			holdHitList.Add (coll.gameObject);
-			Log ("HI");
 		} else {
 			hitList.Add (coll.gameObject);
 		}
@@ -71,19 +76,24 @@ public class Cargo : MonoBehaviour{
 			Hold hitHold = holdHitList[0].GetComponent<Hold>();
 			//Snap this to the grid of that hold.
 			//Delta from the corner of the hold, in world units
-			Vector3 difference = hitHold.offset - transform.position;
+			Vector3 difference = transform.position - hitHold.offset;
 			//Multiply by 100 to get pixels, then divide by 32 to get grid units
 			difference = difference * 100.0f / 32.0f;
+			//Add rounding buffer
+			difference += new Vector3(0.16f, 0.16f);
 			//Floor to nearest grid space
-			difference.x = Mathf.Floor(difference.x);
-			difference.y = Mathf.Floor(difference.y);
-			//Note this for later
-			Vector3 offsetInGrid = new Vector3(difference.x, difference.y, difference.z);
+			difference.x = Mathf.Ceil(difference.x);
+			difference.y = Mathf.Ceil(difference.y);
+			//Check if you're fully inside the hold here, cuz it's easy in these units
+			if(difference.x<0 || difference.x+size.x>=hitHold.holdSize || difference.y-size.y<0 || difference.y>=hitHold.holdSize){
+				GoHome();
+				return;
+			}
 			//Multiply by 32 to get pixels, then divide by 100 to get world units
 			difference = difference * 32.0f / 100.0f;
 			//Add the difference to the offset, and set it as my position, and fudge to clean up
-			transform.position = -1*(hitHold.offset + difference);
-			transform.position += new Vector3(-0.16f, -0.16f);
+			transform.position = hitHold.offset + difference;
+			transform.position += new Vector3(-0.16f, -0.16f); //this is largely magic just don't worry about it
 			//Now check if you're hitting any other cargo.
 			bool hittingSomething = false;
 			foreach(GameObject obj in hitList){
@@ -94,6 +104,7 @@ public class Cargo : MonoBehaviour{
 			}
 			if(hittingSomething){
 				GoHome();
+				return;
 			}else{
 				//I just rounded to the grid and I'm not hitting anything. I should stop here.
 				//Make this my new home
@@ -107,14 +118,13 @@ public class Cargo : MonoBehaviour{
 			}
 		} else {
 			GoHome();
+			return;
 		}
     }
 
 	void GoHome(){
+		//kludge
+		pos.z = -2.5f;
 		transform.position = pos;
-	}
-
-	void Log(string txt){
-		GameObject.FindWithTag("Console").GetComponent<Text>().text=txt;
 	}
 }
