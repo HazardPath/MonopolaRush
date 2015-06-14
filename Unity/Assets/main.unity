@@ -584,7 +584,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   isMovingAway: 1
-  distance: 0
   fuelPerJump: 0
   crewMorale: 0
   tags: 
@@ -755,7 +754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefix: 
-  whatITrack: 1
+  whatITrack: 0
 --- !u!114 &891537197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,6 +877,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 976422309}
   - 212: {fileID: 976422308}
+  - 114: {fileID: 976422310}
   m_Layer: 0
   m_Name: ProgressMarker
   m_TagString: Untagged
@@ -923,6 +923,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
+--- !u!114 &976422310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 976422307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11144a0a0e022f940b70fe9456f6be9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1324599078
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,57 +1313,6 @@ Transform:
   - {fileID: 393212512}
   m_Father: {fileID: 0}
   m_RootOrder: 9
---- !u!1001 &1633461252
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 433898, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -.319999993
-      objectReference: {fileID: 0}
-    - target: {fileID: 433898, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -1.19000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 433898, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 433898, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 433898, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 433898, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 433898, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 433898, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 146112, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-      propertyPath: m_Name
-      value: Crew
-      objectReference: {fileID: 0}
-    - target: {fileID: 21248456, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 11492392, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-  m_ParentPrefab: {fileID: 100100000, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1707722871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1488,26 +1448,3 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
---- !u!1 &2143744495 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 146112, guid: c713653dc10cf9349ac81a68540c3a01, type: 2}
-  m_PrefabInternal: {fileID: 1633461252}
---- !u!114 &2143744496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2143744495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c9c183325ee51e4fa3b34804a56ae8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ID: 0
-  pos: {x: 0, y: 0, z: 0}
-  quantity: 0
-  maxQuantity: 0
-  tags: 
-  hold: {fileID: 0}
-  job: 0
-  crewHold: {fileID: 0}

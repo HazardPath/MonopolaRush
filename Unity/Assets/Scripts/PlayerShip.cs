@@ -37,7 +37,11 @@ public class PlayerShip : MonoBehaviour {
 	public bool isMovingAway = true;
 
 	// Current distance from home as marked on the screen.
-	public float distance = HOME_IN_UNITS;
+	private float _distance = HOME_IN_UNITS;
+	public float distance {
+		get { return _distance; }
+		set { _distance = value; }
+	}
 
 	// Amount of fuel used for each jump
 	public int fuelPerJump = 2;

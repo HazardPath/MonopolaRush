@@ -74,7 +74,7 @@ public class Cargo : MonoBehaviour{
 
     void OnMouseDrag(){
         //You still got me, so I should probably draw myself centered where the mouse is.
-		transform.position = new Vector3 (((Input.mousePosition.x-5)/100)-4, ((Input.mousePosition.y+5)/100)-3, transform.position.z);
+		transform.position = new Vector3 (((Input.mousePosition.x-5)/100)-4, ((Input.mousePosition.y+5)/100)-3, -5);
     }
 
     void OnMouseUp(){
