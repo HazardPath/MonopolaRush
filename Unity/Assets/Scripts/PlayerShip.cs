@@ -91,6 +91,40 @@ public class PlayerShip : MonoBehaviour {
 		}
 	}
 
+	// Checks if $amount of $string are onboard. If so, decreases available stores by $amount and returns true. If not, returns false.
+	public bool consumeSupplies(string ID, int amount) {
+		//Check cache tosee if ship has enough
+		if (inv [ID] < amount)
+			return false;
+		else {
+			// Making a list of every stack of Cargo<ID>
+			List<Cargo> allSupplies = new List<Cargo>();
+			foreach(Cargo cur in mainHold) {
+				if (cur.ID == ID)	allSupplies.Add(cur);
+			}
+			allSupplies.Sort ((e1, e2) => e1.quantity > e2.quantity);
+			int amountRemaining = amount;
+			foreach (List<cargo> hold in new List<List<Cargo>>(mainHold, hiddenHold)) {
+				while (amountRemaining > 0 && allSupplies.Count > 0) {
+					if (allSupplies[0].quantity > amountRemaining) allSupplies[0].quantity -= amountRemaining;
+					else if (allSupplies[0].quantity == amountRemaining) allSupplies.RemoveAt(0);
+					else {
+						amountRemaining -= allSupplies[0].quantity;
+						allSupplies.RemoveAt(0);
+					}
+				}
+			}
+
+			Recompile();
+			return true;
+		}
+	}
+
+	public void jump() {
+		//TODO: decrease food by this.mouthsToFeed;
+		//TODO: decrease fuel by this.fuelPerJumps;
+	}
+
 	void ChangeSprite (Sprite newSprite) {
 		spriteRenderer.sprite = newSprite;
 	}
