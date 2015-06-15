@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -85,6 +86,12 @@ public class PlayerShip : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+	}
+
+	void OnGUI() {
+		if (GUI.Button(new Rect(10, 10, 150, 100), Time.time+""))
+			print("You clicked the button!");
 		
 	}
 
