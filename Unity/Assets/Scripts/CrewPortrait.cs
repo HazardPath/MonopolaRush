@@ -12,6 +12,7 @@ public class CrewPortrait : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		spriteRenderer = GetComponent<SpriteRenderer> ();
 		if (spriteList==null) {
 			spriteList = new Dictionary<Jobs, Sprite>();
 			spriteList[Jobs.grunt] = Resources.Load<Sprite>("Crew/In Conversation/Security");
