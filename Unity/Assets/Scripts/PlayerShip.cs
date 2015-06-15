@@ -31,13 +31,17 @@ public class PlayerShip : MonoBehaviour {
 	public List<Cargo> tempHold = new List<Cargo>();
 
 	// List of crew on ship - if inactive crew is a thing, they'll be in cargo, not in here.
-	public Crew[] crew = new Crew[4];
+	public Crew[] crew = new Crew[6]{null, null, null, null, null, null};
 	
 	// Direction of travel. True = towards motherload, false = towards home.
 	public bool isMovingAway = true;
 
 	// Current distance from home as marked on the screen.
-	public float distance = HOME_IN_UNITS;
+	private float _distance = HOME_IN_UNITS;
+	public float distance {
+		get { return _distance; }
+		set { _distance = value; }
+	}
 
 	// Amount of fuel used for each jump
 	public int fuelPerJump = 2;
