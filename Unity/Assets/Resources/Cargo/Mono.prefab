@@ -71,10 +71,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e561f5cfdd4063946821c41ceee7208e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: Fuel
+  ID: 4
   pos: {x: 0, y: 0, z: 0}
-  quantity: 0
-  maxQuantity: 0
+  quantity: 1
+  maxQuantity: 1
   tags: 
   hold: {fileID: 0}
 --- !u!212 &21219544
@@ -109,7 +109,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxQuantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ID
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 109488}
