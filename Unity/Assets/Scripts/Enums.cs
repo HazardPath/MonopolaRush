@@ -16,7 +16,8 @@ public enum Jobs {
 	grunt,	//"Security"
 	meche,	//"Engineer"
 	medic,
-	rogue	//"Grifter"
+	rogue,	//"Grifter"
+	owner
 }
 
 public enum Cargotypes {

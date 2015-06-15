@@ -6,8 +6,9 @@ public static class EventList{
 	public static List<EventInterface> allEvents;
 	
 	static EventList() {
+		PlayerShip ship = PlayerShip.FindObjectOfType<PlayerShip> ();
 		allEvents = new List<EventInterface>();
-		allEvents.Add(new NullEvent());
+		allEvents.Add(new NullEvent(ship));
 	}
 	
 	public static void eventGenerator(PlayerShip ship) {
