@@ -26,7 +26,7 @@ public class Hold : MonoBehaviour {
 		tag = "Hold";
 		offset /= 100;
 
-		ship = GameObject.FindWithTag ("Player Ship").GetComponent<PlayerShip> ();
+		ship = PlayerShip.FindObjectOfType<PlayerShip> ();
 		emptySquare = Resources.Load<GameObject> ("gridSquare");
 
 		switch (holdType) {

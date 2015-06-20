@@ -45,7 +45,7 @@ public class PlayerShip : MonoBehaviour {
 	public int fuelPerJump = 2;
 	
 	// Current morale of the ship. Percentage.
-	public double crewMorale = 100.0;
+	public float crewMorale = 100.0f;
 	
 	// A list of tags about the ship.
 	public List<Tags> tags;
@@ -153,7 +153,7 @@ public class PlayerShip : MonoBehaviour {
 		if (!consumeSupplies(Cargotypes.food, mouthsToFeed)) {
 			int shortfall = mouthsToFeed - inv[Cargotypes.food];
 			Recompile ();
-			crewMorale -= 12.5 * shortfall;
+			crewMorale -= 12.5f * shortfall;
 			if (!tags.Contains(Tags.outoffood)) tags.Add(Tags.outoffood);
 		}
 		if (!tags.Contains(Tags.broken) && jumpDirection != 0) {
