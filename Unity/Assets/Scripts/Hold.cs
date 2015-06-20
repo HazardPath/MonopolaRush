@@ -7,9 +7,6 @@ public class Hold : MonoBehaviour {
 	// The ship.
 	private PlayerShip ship;
 
-	// What we draw with.
-	private SpriteRenderer spriteRenderer;
-
 	// An empty square of the grid.
 	private GameObject emptySquare;
 
@@ -30,7 +27,6 @@ public class Hold : MonoBehaviour {
 		offset /= 100;
 
 		ship = GameObject.FindWithTag ("Player Ship").GetComponent<PlayerShip> ();
-		spriteRenderer = GetComponent<SpriteRenderer>(); // we are accessing the SpriteRenderer that is attached to the Gameobject
 		emptySquare = Resources.Load<GameObject> ("gridSquare");
 
 		switch (holdType) {
