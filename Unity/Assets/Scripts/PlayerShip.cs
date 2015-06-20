@@ -33,9 +33,6 @@ public class PlayerShip : MonoBehaviour {
 
 	// List of crew on ship - if inactive crew is a thing, they'll be in cargo, not in here.
 	public Crew[] crew = new Crew[6]{null, null, null, null, null, null};
-	
-	// Direction of travel. True = towards motherload, false = towards home.
-	public bool isMovingAway = true;
 
 	// Current distance from home as marked on the screen.
 	private float _distance = HOME_IN_UNITS;
@@ -150,7 +147,8 @@ public class PlayerShip : MonoBehaviour {
 		}
 	}
 
-	public void jump() {
+	// int jumpDirection positive = towards motherload, negative = towards home, 0 = waiting in place.
+	public void jump(int jumpDirection) {
 		//decrease food by this.mouthsToFeed;
 		if (!consumeSupplies(Cargotypes.food, mouthsToFeed)) {
 			int shortfall = mouthsToFeed - inv[Cargotypes.food];
@@ -158,10 +156,10 @@ public class PlayerShip : MonoBehaviour {
 			crewMorale -= 12.5 * shortfall;
 			if (!tags.Contains(Tags.outoffood)) tags.Add(Tags.outoffood);
 		}
-		if (!tags.Contains(Tags.broken)) {
+		if (!tags.Contains(Tags.broken) && jumpDirection != 0) {
 			//decrease fuel by this.fuelPerJumps;
 			if (consumeSupplies(Cargotypes.fuel, fuelPerJump)) {
-				if (isMovingAway) distance += UNITS_PER_JUMP;
+				if (jumpDirection > 0) distance += UNITS_PER_JUMP;
 				else distance -= UNITS_PER_JUMP;
 			}
 			else if (!tags.Contains(Tags.outoffuel)) tags.Add(Tags.outoffuel);
